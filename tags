@@ -1,0 +1,256 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ACCEPT_MULTICAST	nodes/cluster.h	/^	ACCEPT_MULTICAST,$/;"	e	enum:node_states
+BERKELY_SYNC	nodes/berkley.cpp	/^void BERKELY_SYNC(node_status_t *ns)$/;"	f
+BIN_DIR	Makefile	/^BIN_DIR := bin$/;"	m
+CAUSAL	nodes/cluster.h	/^	CAUSAL,$/;"	e	enum:msg_ordering
+CC	Makefile	/^CC = g++$/;"	m
+CLK_SYNC_READY	nodes/cluster.h	/^	CLK_SYNC_READY,$/;"	e	enum:node_states
+CLK_SYNC_START	nodes/cluster.h	/^	CLK_SYNC_START,$/;"	e	enum:node_states
+CLK_SYN_UPDATE	nodes/cluster.h	/^	CLK_SYN_UPDATE,$/;"	e	enum:node_states
+CONNECTED	nodes/cluster.h	/^	CONNECTED,$/;"	e	enum:conn_stat
+CONNECT_TO_BOSSES	nodes/state.cpp	/^static void CONNECT_TO_BOSSES(node_status_t *ns)$/;"	f	file:
+CONNECT_TO_SELF	nodes/state.cpp	/^static void CONNECT_TO_SELF(node_status_t *ns)$/;"	f	file:
+ENTERING_MULTICAST	nodes/cluster.h	/^	ENTERING_MULTICAST,$/;"	e	enum:node_states
+EXEC	Makefile	/^EXEC := node$/;"	m
+GRANTED	nodes/cluster.h	/^	GRANTED,$/;"	e	enum:request_status
+HELLO	nodes/protocol.h	/^	HELLO = 1,$/;"	e	enum:msg_type
+INIT	nodes/cluster.h	/^	INIT,$/;"	e	enum:lock_state
+LOCKED	nodes/cluster.h	/^	LOCKED,$/;"	e	enum:lock_state
+LOCK_GRANTED	nodes/protocol.h	/^	LOCK_GRANTED,$/;"	e	enum:msg_type
+LOCK_RELEASE	nodes/protocol.h	/^	LOCK_RELEASE,$/;"	e	enum:msg_type
+LOCK_REQUEST	nodes/protocol.h	/^	LOCK_REQUEST,$/;"	e	enum:msg_type
+Logger	utils/logger.h	/^class Logger {$/;"	c
+MESSAGE	nodes/protocol.h	/^typedef struct MESSAGE {$/;"	s
+MKDIR_P	Makefile	/^MKDIR_P := mkdir -p $/;"	m
+MULTICAST	nodes/protocol.h	/^	MULTICAST,$/;"	e	enum:msg_type
+MULTICAST_RD	nodes/protocol.h	/^	MULTICAST_RD,$/;"	e	enum:msg_type
+M_seq_no	nodes/protocol.h	/^	unsigned long M_seq_no;$/;"	m	struct:MESSAGE
+M_type	nodes/protocol.h	/^        enum msg_type M_type;$/;"	m	struct:MESSAGE	typeref:enum:MESSAGE::msg_type
+M_u_cst	nodes/protocol.h	/^		clock_sync_t M_u_cst;$/;"	m	union:MESSAGE::__anon1
+M_u_h	nodes/protocol.h	/^		hello_t M_u_h;$/;"	m	union:MESSAGE::__anon1
+M_u_lmt	nodes/protocol.h	/^		lock_msg_t M_u_lmt;$/;"	m	union:MESSAGE::__anon1
+M_u_mrt	nodes/protocol.h	/^		mult_ready_t M_u_mrt;$/;"	m	union:MESSAGE::__anon1
+M_u_mult	nodes/protocol.h	/^		mult_t M_u_mult;$/;"	m	union:MESSAGE::__anon1
+M_u_srt	nodes/protocol.h	/^		sync_reply_t M_u_srt;$/;"	m	union:MESSAGE::__anon1
+M_u_uct	nodes/protocol.h	/^		update_clk_t M_u_uct;$/;"	m	union:MESSAGE::__anon1
+NOT_CAUSAL	nodes/cluster.h	/^	NOT_CAUSAL,$/;"	e	enum:msg_ordering
+NOT_CONNECTED	nodes/cluster.h	/^	NOT_CONNECTED,$/;"	e	enum:conn_stat
+OFF	nodes/cluster.h	/^	OFF,$/;"	e	enum:node_states
+ON	nodes/cluster.h	/^	ON,$/;"	e	enum:node_states
+READY_CAUSAL_MULTICAST	nodes/cluster.h	/^	READY_CAUSAL_MULTICAST$/;"	e	enum:node_states
+READY_MULTICAST	nodes/cluster.h	/^	READY_MULTICAST$/;"	e	enum:conn_stat
+RELEASED	nodes/cluster.h	/^	RELEASED,$/;"	e	enum:request_status
+REQUESTED	nodes/cluster.h	/^	REQUESTED,$/;"	e	enum:request_status
+SEND_CLK	nodes/protocol.h	/^	SEND_CLK,$/;"	e	enum:msg_type
+SEND_CLK_REP	nodes/protocol.h	/^	SEND_CLK_REP,$/;"	e	enum:msg_type
+START_STATE_MC	nodes/state.cpp	/^void START_STATE_MC(node_status_t *ns)$/;"	f
+UNLOCKED	nodes/cluster.h	/^	UNLOCKED,$/;"	e	enum:lock_state
+UPDATE_CLK	nodes/protocol.h	/^	UPDATE_CLK,$/;"	e	enum:msg_type
+WAIT_MC	nodes/state.cpp	/^static void WAIT_MC(cluster_config_t *cc, int self)$/;"	f	file:
+WAIT_MULT_READY	nodes/state.cpp	/^void WAIT_MULT_READY(node_status_t *ns)$/;"	f
+__CL_H_	nodes/cluster.h	2;"	d
+__LOCKS__H_	nodes/locks.h	2;"	d
+__LOGGER_H_	utils/logger.h	2;"	d
+__MULT_H_	nodes/multicast.h	2;"	d
+__PROTO_H_	nodes/protocol.h	2;"	d
+__SOCK_H_	utils/sock.h	2;"	d
+__STATE_H_	nodes/state.h	2;"	d
+__UTIL_H_	utils/util.h	2;"	d
+access_file	nodes/main.cpp	/^static void access_file(FILE *fp)$/;"	f	file:
+addrlen	utils/sock.h	/^	socklen_t addrlen;$/;"	m	class:c_sock
+adjust	nodes/protocol.h	/^	double adjust;$/;"	m	struct:update_clk
+app_V	nodes/cluster.h	/^	unsigned long app_V[10];$/;"	m	struct:app_msg
+app_from	nodes/cluster.h	/^	int           app_from;$/;"	m	struct:app_msg
+app_msg	nodes/cluster.h	/^typedef struct app_msg {$/;"	s
+app_msg_t	nodes/cluster.h	/^} app_msg_t;$/;"	t	typeref:struct:app_msg
+app_v_size	nodes/cluster.h	/^	int           app_v_size;$/;"	m	struct:app_msg
+b_diffs	nodes/cluster.h	/^	long          *b_diffs;$/;"	m	struct:berkley
+b_mx	nodes/cluster.h	/^	mutex          b_mx;$/;"	m	struct:berkley
+b_procs	nodes/cluster.h	/^	unsigned int   b_procs;$/;"	m	struct:berkley
+berkley	nodes/cluster.h	/^typedef struct berkley {$/;"	s
+berkley_adjust_clock	nodes/berkley.cpp	/^void berkley_adjust_clock(node_status_t *ns, double adjust)$/;"	f
+berkley_clk_sync_rep	nodes/berkley.cpp	/^void berkley_clk_sync_rep(node_status_t *ns, int id, long cl_diff)$/;"	f
+berkley_t	nodes/cluster.h	/^} berkley_t;$/;"	t	typeref:struct:berkley
+bm_V	nodes/cluster.h	/^	unsigned long *bm_V;$/;"	m	struct:buffered_multicast
+bm_dl	nodes/cluster.h	/^	bool bm_dl;$/;"	m	struct:buffered_multicast
+bm_id	nodes/cluster.h	/^	int bm_id;$/;"	m	struct:buffered_multicast
+bootstrap_cluster	nodes/cluster.cpp	/^node_status_t *bootstrap_cluster(cluster_boot_t *cbt)$/;"	f
+buffer_m_t	nodes/cluster.h	/^} buffer_m_t;$/;"	t	typeref:struct:buffered_multicast
+buffered_multicast	nodes/cluster.h	/^typedef struct buffered_multicast {$/;"	s
+c_V	nodes/cluster.h	/^	unsigned long      c_V[10];$/;"	m	struct:causal
+c_appq	nodes/cluster.h	/^	queue<app_msg_t *> c_appq;$/;"	m	struct:causal
+c_buffer	nodes/cluster.h	/^	list<buffer_m_t *> c_buffer;$/;"	m	struct:causal
+c_count	nodes/cluster.h	/^	long               c_count;$/;"	m	struct:causal
+c_cv	nodes/cluster.h	/^	condition_variable c_cv;$/;"	m	struct:causal
+c_mx	nodes/cluster.h	/^	mutex              c_mx;$/;"	m	struct:causal
+c_sock	utils/sock.h	/^class c_sock {$/;"	c
+c_sock_accept	utils/sock.cpp	/^c_sock *c_sock :: c_sock_accept()$/;"	f	class:c_sock
+c_sock_addr	utils/sock.cpp	/^int c_sock :: c_sock_addr(string ip, int port)$/;"	f	class:c_sock
+c_sock_bind	utils/sock.cpp	/^int c_sock :: c_sock_bind()$/;"	f	class:c_sock
+c_sock_close	utils/sock.cpp	/^void c_sock::c_sock_close()$/;"	f	class:c_sock
+c_sock_connect	utils/sock.cpp	/^int c_sock::c_sock_connect()$/;"	f	class:c_sock
+c_sock_listen	utils/sock.cpp	/^int c_sock :: c_sock_listen()$/;"	f	class:c_sock
+c_sock_read	utils/sock.cpp	/^ssize_t c_sock::c_sock_read(void *buffer, size_t len)$/;"	f	class:c_sock
+c_sock_write	utils/sock.cpp	/^ssize_t c_sock::c_sock_write(void *buffer, size_t len)$/;"	f	class:c_sock
+c_v_size	nodes/cluster.h	/^	unsigned long      c_v_size;$/;"	m	struct:causal
+causal	nodes/cluster.h	/^typedef struct causal {$/;"	s
+causal	nodes/main.cpp	/^	enum msg_ordering  causal;$/;"	m	struct:sender	typeref:enum:sender::msg_ordering	file:
+causal_t	nodes/cluster.h	/^} causal_t;$/;"	t	typeref:struct:causal
+cbp_causality	nodes/cluster.h	/^	enum msg_ordering  cbp_causality;$/;"	m	struct:cluster_bootstrap_param	typeref:enum:cluster_bootstrap_param::msg_ordering
+cbp_fname	nodes/cluster.h	/^	char              *cbp_fname;$/;"	m	struct:cluster_bootstrap_param
+cbp_iclock	nodes/cluster.h	/^	unsigned long      cbp_iclock;$/;"	m	struct:cluster_bootstrap_param
+cbp_id	nodes/cluster.h	/^	int                cbp_id;$/;"	m	struct:cluster_bootstrap_param
+cbp_isdaemon	nodes/cluster.h	/^	bool               cbp_isdaemon;$/;"	m	struct:cluster_bootstrap_param
+cbp_nodelist	nodes/cluster.h	/^	char              *cbp_nodelist;$/;"	m	struct:cluster_bootstrap_param
+cc_cluster	nodes/cluster.h	/^	list<node_config_t *> cc_cluster;$/;"	m	struct:cluster_config
+cc_get_daemon	nodes/cluster.cpp	/^node_config_t *cc_get_daemon(cluster_config_t *cc)$/;"	f
+cc_get_record	nodes/cluster.cpp	/^node_config_t *cc_get_record(int id, cluster_config_t *cc)$/;"	f
+cli_addr	utils/sock.h	/^	struct sockaddr_in cli_addr;$/;"	m	class:c_sock	typeref:struct:c_sock::sockaddr_in
+clock	nodes/protocol.h	/^	unsigned long clock;$/;"	m	struct:clock_sync
+clock_sync	nodes/protocol.h	/^typedef struct clock_sync {$/;"	s
+clock_sync_recieved	nodes/berkley.cpp	/^void clock_sync_recieved(node_status_t *ns, clock_sync_t cst)$/;"	f
+clock_sync_t	nodes/protocol.h	/^} clock_sync_t;$/;"	t	typeref:struct:clock_sync
+cluster_boot_t	nodes/cluster.h	/^} cluster_boot_t;$/;"	t	typeref:struct:cluster_bootstrap_param
+cluster_bootstrap_param	nodes/cluster.h	/^typedef struct cluster_bootstrap_param {$/;"	s
+cluster_config	nodes/cluster.h	/^typedef struct cluster_config {$/;"	s
+cluster_config_t	nodes/cluster.h	/^} cluster_config_t;$/;"	t	typeref:struct:cluster_config
+conn_stat	nodes/cluster.h	/^enum conn_stat {$/;"	g
+connect_to_one_boss	nodes/state.cpp	/^static void connect_to_one_boss(node_status_t *ns, node_config_t *boss)$/;"	f	file:
+cr_log	utils/logger.h	6;"	d
+cs_LIBRARIES	Makefile	/^cs_LIBRARIES := -lpthread$/;"	m
+current_V	nodes/cluster.h	/^	unsigned long current_V[10];$/;"	m	struct:app_msg
+d_lock	nodes/cluster.h	/^typedef struct d_lock {$/;"	s
+d_lock_msg	nodes/protocol.h	/^typedef struct d_lock_msg {$/;"	s
+d_lock_requestor	nodes/cluster.h	/^typedef struct d_lock_requestor {$/;"	s
+d_lock_t	nodes/cluster.h	/^} d_lock_t;$/;"	t	typeref:struct:d_lock
+deliver_buffered_messages	nodes/multicast.cpp	/^void deliver_buffered_messages(node_status_t *ns)$/;"	f
+deliver_message_to_app	nodes/multicast.cpp	/^void deliver_message_to_app(causal_t *ct, unsigned long msg[10], int from)$/;"	f
+diff	nodes/protocol.h	/^	long          diff;$/;"	m	struct:sync_reply
+dl_id	nodes/protocol.h	/^	int dl_id;$/;"	m	struct:d_lock_msg
+dl_init_lock	nodes/locks.cpp	/^int dl_init_lock(node_status_t *ns)$/;"	f
+dl_init_request	nodes/locks.cpp	/^int dl_init_request(node_status_t *ns)$/;"	f
+dl_lock	nodes/locks.cpp	/^int dl_lock(node_status_t *ns)$/;"	f
+dl_lock_granted	nodes/locks.cpp	/^int dl_lock_granted(node_status_t *ns)$/;"	f
+dl_lock_req	nodes/locks.cpp	/^int dl_lock_req(node_status_t *ns, int id)$/;"	f
+dl_mx	nodes/cluster.h	/^	mutex           dl_mx;$/;"	m	struct:d_lock
+dl_owner	nodes/cluster.h	/^	int             dl_owner;$/;"	m	struct:d_lock
+dl_requests	nodes/cluster.h	/^	queue<int>      dl_requests;$/;"	m	struct:d_lock
+dl_state	nodes/cluster.h	/^	enum lock_state dl_state;$/;"	m	struct:d_lock	typeref:enum:d_lock::lock_state
+dl_unlock	nodes/locks.cpp	/^int dl_unlock(node_status_t *ns)$/;"	f
+dl_unlock_req	nodes/locks.cpp	/^int dl_unlock_req(node_status_t *ns, int id)$/;"	f
+dlr_cv	nodes/cluster.h	/^	condition_variable  dlr_cv;$/;"	m	struct:d_lock_requestor
+dlr_mx	nodes/cluster.h	/^	mutex               dlr_mx;$/;"	m	struct:d_lock_requestor
+dlr_request_t	nodes/cluster.h	/^} dlr_request_t;$/;"	t	typeref:struct:d_lock_requestor
+dlr_state	nodes/cluster.h	/^	enum request_status dlr_state;$/;"	m	struct:d_lock_requestor	typeref:enum:d_lock_requestor::request_status
+elect_coordinator	nodes/cluster.cpp	/^void elect_coordinator(cluster_config_t *cc)$/;"	f
+get_list	nodes/cluster.cpp	/^list<node_config_t  *> get_list(cluster_config_t *cc)$/;"	f
+h_id	nodes/protocol.h	/^	int           h_id;$/;"	m	struct:hello
+h_id	nodes/protocol.h	/^	int           h_id;$/;"	m	struct:mult_ready
+h_id	nodes/protocol.h	/^	int           h_id;$/;"	m	struct:sync_reply
+hello	nodes/protocol.h	/^typedef struct hello {$/;"	s
+hello_t	nodes/protocol.h	/^} hello_t;$/;"	t	typeref:struct:hello
+incoming	nodes/state.cpp	/^static void *incoming(void *ctx)$/;"	f	file:
+insert_node_config	nodes/cluster.cpp	/^int insert_node_config(cluster_config_t *cc, node_config_t *nc)$/;"	f
+is_causal	nodes/multicast.cpp	/^bool is_causal(unsigned long local[10], int self, unsigned long msg[10], int id, int size)$/;"	f
+is_fifo	nodes/multicast.cpp	/^bool is_fifo(unsigned long local[10], unsigned long msg[10], int id, int size)$/;"	f
+is_string_num	utils/util.cpp	/^bool is_string_num(string s)$/;"	f
+listen_loop	nodes/state.cpp	/^static void listen_loop(c_sock *ss, node_status_t *ns)$/;"	f	file:
+listener	nodes/state.cpp	/^static void *listener(void *ctx)$/;"	f	file:
+load_cluster	nodes/fileparser.cpp	/^int load_cluster(int id, char *config, cluster_config_t *cc)$/;"	f
+lock_msg_t	nodes/protocol.h	/^} lock_msg_t;$/;"	t	typeref:struct:d_lock_msg
+lock_state	nodes/cluster.h	/^enum lock_state {$/;"	g
+m_id	nodes/protocol.h	/^	int               m_id;$/;"	m	struct:mult
+m_order	nodes/protocol.h	/^	enum msg_ordering m_order;$/;"	m	struct:mult	typeref:enum:mult::msg_ordering
+main	nodes/main.cpp	/^int main(int argc, char *argv[])$/;"	f
+msg_ordering	nodes/cluster.h	/^enum msg_ordering {$/;"	g
+msg_t	nodes/protocol.h	/^} msg_t;$/;"	t	typeref:struct:MESSAGE
+msg_type	nodes/protocol.h	/^enum msg_type {$/;"	g
+mulicast_recv	nodes/multicast.cpp	/^void mulicast_recv(node_status_t *ns, unsigned long msg[10], int id, enum msg_ordering order)$/;"	f
+mult	nodes/protocol.h	/^typedef struct mult {$/;"	s
+mult_ready	nodes/protocol.h	/^typedef struct mult_ready {$/;"	s
+mult_ready_t	nodes/protocol.h	/^} mult_ready_t;$/;"	t	typeref:struct:mult_ready
+mult_t	nodes/protocol.h	/^} mult_t;$/;"	t	typeref:struct:mult
+multicast	nodes/multicast.cpp	/^void multicast(node_status_t *ns, enum msg_ordering causality)$/;"	f
+multicast_app_recv	nodes/multicast.cpp	/^app_msg_t *multicast_app_recv(node_status_t *ns)$/;"	f
+multicast_final_print	nodes/main.cpp	/^void multicast_final_print(node_status_t *ns)$/;"	f
+multicast_init_vector	nodes/multicast.cpp	/^void multicast_init_vector(node_status_t *ns)$/;"	f
+multicast_ready	nodes/multicast.cpp	/^void multicast_ready(node_status_t *ns, int id)$/;"	f
+nc_clock	nodes/cluster.h	/^	unsigned long  nc_clock;$/;"	m	struct:node_config
+nc_id	nodes/cluster.h	/^	int            nc_id;$/;"	m	struct:node_config
+nc_ip_addr	nodes/cluster.h	/^	string         nc_ip_addr;$/;"	m	struct:node_config
+nc_port_num	nodes/cluster.h	/^	int            nc_port_num;$/;"	m	struct:node_config
+nc_sock	nodes/cluster.h	/^	c_sock        *nc_sock;$/;"	m	struct:node_config
+nc_status	nodes/cluster.h	/^	enum conn_stat nc_status;$/;"	m	struct:node_config	typeref:enum:node_config::conn_stat
+ncc_connector	nodes/cluster.h	/^	node_config_t *ncc_connector;$/;"	m	struct:node_con_ctx
+ncc_cs	nodes/cluster.h	/^	c_sock        *ncc_cs;$/;"	m	struct:node_con_ctx
+ncc_ns	nodes/cluster.h	/^	node_status_t *ncc_ns;$/;"	m	struct:node_con_ctx
+node_con_ctx	nodes/cluster.h	/^typedef struct node_con_ctx {$/;"	s
+node_con_ctx_t	nodes/cluster.h	/^} node_con_ctx_t;$/;"	t	typeref:struct:node_con_ctx
+node_config	nodes/cluster.h	/^typedef struct node_config {$/;"	s
+node_config_t	nodes/cluster.h	/^} node_config_t;$/;"	t	typeref:struct:node_config
+node_states	nodes/cluster.h	/^enum node_states {$/;"	g
+node_status	nodes/cluster.h	/^typedef struct node_status {$/;"	s
+node_status_t	nodes/cluster.h	/^} node_status_t;$/;"	t	typeref:struct:node_status
+nr_msg	nodes/main.cpp	/^	int                nr_msg;$/;"	m	struct:sender	file:
+nr_msg	nodes/main.cpp	/^	int            nr_msg;$/;"	m	struct:reciever	file:
+ns	nodes/main.cpp	/^	node_status_t     *ns;$/;"	m	struct:sender	file:
+ns	nodes/main.cpp	/^	node_status_t *ns;$/;"	m	struct:reciever	file:
+ns_berk	nodes/cluster.h	/^	berkley_t        *ns_berk;$/;"	m	struct:node_status
+ns_causal	nodes/cluster.h	/^	causal_t         *ns_causal;$/;"	m	struct:node_status
+ns_cc	nodes/cluster.h	/^	cluster_config_t *ns_cc;$/;"	m	struct:node_status
+ns_isdmon	nodes/cluster.h	/^	bool              ns_isdmon;$/;"	m	struct:node_status
+ns_lock	nodes/cluster.h	/^	d_lock_t         *ns_lock;$/;"	m	struct:node_status
+ns_lock_req	nodes/cluster.h	/^	dlr_request_t    *ns_lock_req;$/;"	m	struct:node_status
+ns_self	nodes/cluster.h	/^	node_config_t    *ns_self;$/;"	m	struct:node_status
+ns_server	nodes/cluster.h	/^	c_sock            ns_server;$/;"	m	struct:node_status
+ns_state	nodes/cluster.h	/^	enum node_states  ns_state;$/;"	m	struct:node_status	typeref:enum:node_status::node_states
+parse_line	nodes/fileparser.cpp	/^int parse_line(stringstream &ss, char *fi, cluster_config_t *cc)$/;"	f
+print_cluster_config	nodes/cluster.cpp	/^static void print_cluster_config(cluster_config_t *cc)$/;"	f	file:
+print_node_status	nodes/state.cpp	/^static void print_node_status(cluster_config_t *cc)$/;"	f	file:
+print_v	nodes/main.cpp	/^static void print_v(unsigned long self[10], unsigned long msg[10], int size)$/;"	f	file:
+print_v	nodes/multicast.cpp	/^static void print_v(unsigned long msg[10], unsigned long self[10], int size)$/;"	f	file:
+process_clk_sync_rep	nodes/protocol.cpp	/^static void process_clk_sync_rep(c_sock *cs, node_status_t *ns, sync_reply_t msg)$/;"	f	file:
+process_clk_sync_start	nodes/protocol.cpp	/^static void process_clk_sync_start(c_sock *cs, node_status_t *ns, msg_t *msg)$/;"	f	file:
+process_hello_message	nodes/protocol.cpp	/^static int process_hello_message(c_sock *cs, node_status_t *ns, hello_t msg)$/;"	f	file:
+process_lock_granted	nodes/protocol.cpp	/^void process_lock_granted(c_sock *cs, node_status_t *ns)$/;"	f
+process_lock_release	nodes/protocol.cpp	/^void process_lock_release(c_sock *cs, node_status_t *ns, lock_msg_t lmt)$/;"	f
+process_lock_request	nodes/protocol.cpp	/^void process_lock_request(c_sock *cs, node_status_t *ns, lock_msg_t lmt)$/;"	f
+process_msg	nodes/protocol.cpp	/^bool process_msg(c_sock *cs, node_status_t *ns, msg_t *msg)$/;"	f
+process_multicast_message	nodes/protocol.cpp	/^void process_multicast_message(c_sock *cs, node_status_t *ns, mult_t msg)$/;"	f
+process_multicast_rd	nodes/protocol.cpp	/^static void process_multicast_rd(c_sock *cs, node_status_t *ns, mult_ready_t mrt)$/;"	f	file:
+process_update_clk	nodes/protocol.cpp	/^static void process_update_clk(c_sock *cs, node_status_t *ns, update_clk_t msg)$/;"	f	file:
+reciever	nodes/main.cpp	/^typedef struct reciever {$/;"	s	file:
+recv_t	nodes/main.cpp	/^} recv_t;$/;"	t	typeref:struct:reciever	file:
+request_status	nodes/cluster.h	/^enum request_status {$/;"	g
+rfunc	nodes/main.cpp	/^void *rfunc(void *ctx)$/;"	f
+run_computations	nodes/berkley.cpp	/^static void run_computations(node_status_t *ns)$/;"	f	file:
+s_CXX_OBJS	Makefile	/^s_CXX_OBJS := ${s_CXX_SRCS:.cpp=.o}$/;"	m
+s_CXX_SRCS	Makefile	/^s_CXX_SRCS := $(foreach idir, $(s_INCLUDE_DIRS), $(wildcard $(idir)\/*.cpp))$/;"	m
+s_INCLUDE_DIRS	Makefile	/^s_INCLUDE_DIRS := nodes utils$/;"	m
+s_OBJS	Makefile	/^s_OBJS := $(s_CXX_OBJS)$/;"	m
+send_clock_message	nodes/protocol.cpp	/^void send_clock_message(node_status_t *ns, int id)$/;"	f
+send_hello_message	nodes/protocol.cpp	/^void send_hello_message(int id, node_status_t *ns)$/;"	f
+send_lock_granted	nodes/protocol.cpp	/^void send_lock_granted(node_status_t *ns, int id)$/;"	f
+send_lock_request	nodes/protocol.cpp	/^void send_lock_request(node_status_t *ns)$/;"	f
+send_mult_msg	nodes/protocol.cpp	/^void send_mult_msg(node_status_t *ns, enum msg_ordering causality)$/;"	f
+send_mult_ready	nodes/protocol.cpp	/^void send_mult_ready(node_status_t *ns)$/;"	f
+send_time_difference	nodes/protocol.cpp	/^void send_time_difference(node_status_t *ns, int dmon, unsigned long dclock)$/;"	f
+send_unlock_request	nodes/protocol.cpp	/^void send_unlock_request(node_status_t *ns)$/;"	f
+send_update_time	nodes/protocol.cpp	/^void send_update_time(node_status_t *ns, int id, double adjust)$/;"	f
+sender	nodes/main.cpp	/^typedef struct sender {$/;"	s	file:
+sender_t	nodes/main.cpp	/^} sender_t;$/;"	t	typeref:struct:sender	file:
+server_addr	utils/sock.h	/^	struct sockaddr_in server_addr;$/;"	m	class:c_sock	typeref:struct:c_sock::sockaddr_in
+sfunc	nodes/main.cpp	/^void *sfunc(void *ctx)$/;"	f
+sock	utils/sock.h	/^	int sock;$/;"	m	class:c_sock
+sync_reply	nodes/protocol.h	/^typedef struct sync_reply {$/;"	s
+sync_reply_t	nodes/protocol.h	/^} sync_reply_t;$/;"	t	typeref:struct:sync_reply
+t_daemon	nodes/cluster.h	/^	int t_daemon;$/;"	m	struct:cluster_config
+u	nodes/protocol.h	/^	} u;$/;"	m	struct:MESSAGE	typeref:union:MESSAGE::__anon1
+update_clk	nodes/protocol.h	/^typedef struct update_clk {$/;"	s
+update_clk_t	nodes/protocol.h	/^} update_clk_t;$/;"	t	typeref:struct:update_clk
+vec	nodes/protocol.h	/^	unsigned long     vec[10];$/;"	m	struct:mult
