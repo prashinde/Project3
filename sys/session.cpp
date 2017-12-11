@@ -7,9 +7,7 @@ static mutex t_mx;
 unsigned long get_next_acc()
 {
 	unsigned long t;
-	unique_lock<mutex> lck(t_mx);
 	t = gacc_n++;
-	lck.unlock();
 	return t;
 }
 
@@ -17,6 +15,7 @@ rep_msg_t *handle_create(rq_cr_msg cr_msg, coomdt_t *cmt)
 {
 	/* Allocate a new transaction */ 
 	rep_cr_msg rep_cr;	
+	unique_lock<mutex> lck(t_mx);
 	trans_t *trans = new_transaction();
 	trans->acc_nr = get_next_acc();
 	trans->amount = cr_msg.amount;
@@ -28,6 +27,7 @@ rep_msg_t *handle_create(rq_cr_msg cr_msg, coomdt_t *cmt)
 	rep_cr.err_code = trans->status;
 	msg->u.cr_msg = rep_cr;
 	msg->type = CREATE_REP;
+	lck.unlock();
 	delete trans;
 	return msg;
 }
@@ -35,6 +35,7 @@ rep_msg_t *handle_create(rq_cr_msg cr_msg, coomdt_t *cmt)
 rep_msg_t *handle_update(rq_update_msg u_msg, coomdt_t *cmt)
 {
 	rep_update_msg rep_up;
+	unique_lock<mutex> lck(t_mx);
 	trans_t *trans = new_transaction();
 	trans->acc_nr = u_msg.acc_nr;
 	trans->amount = u_msg.amount;
@@ -47,6 +48,7 @@ rep_msg_t *handle_update(rq_update_msg u_msg, coomdt_t *cmt)
 	msg->u.up_msg = rep_up;
 	msg->type = UPDATE_REP;
 	delete trans;
+	lck.unlock();
 	return msg;	
 }
 
@@ -55,6 +57,7 @@ rep_msg_t *handle_query(rq_query_msg q_msg, coomdt_t *cmt)
 	rep_query_msg rep_q;
 	rep_msg_t *msg = new rep_msg_t;
 
+	unique_lock<mutex> lck(t_mx);
 	trans_t *trans = new_transaction();
 	trans->acc_nr = q_msg.acc_nr;
 	trans->t_op_type = QUERY;
@@ -65,12 +68,12 @@ rep_msg_t *handle_query(rq_query_msg q_msg, coomdt_t *cmt)
 	msg->u.q_msg = rep_q;
 	msg->type = QUERY_REP;
 	delete trans;
+	lck.unlock();
 	return msg;	
 }
 
 rep_msg_t * msg_handler(rq_msg_t req, coomdt_t *cmt)
 {
-	cout << "Recieved a message from client..." << endl;
 	rep_msg_t *rep;
 	switch(req.type) {
 		case CREATE_REQ:
@@ -139,7 +142,7 @@ void cmdt_open_client(coomdt_t *cmdt)
 		return ;
 	}
 
-	cout << "CMDT PORT:" << cmdt->cmdt_cl_port << endl;
+	cout << "Clients connect on PORT:" << cmdt->cmdt_cl_port << endl;
 	rc = bs->c_sock_bind();
 	if(rc < 0) {
 		delete bs;

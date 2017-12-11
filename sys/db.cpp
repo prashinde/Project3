@@ -1,5 +1,22 @@
 #include "db.h"
+#include <unistd.h>
+#include <map>
 db_t gdta;
+
+void db_sync()
+{
+	pid_t pid;
+	string dbname;
+	pid = getpid();
+	FILE *fp = NULL;
+	dbname = string("database")+to_string(pid);
+
+	fp = fopen(dbname.c_str(), "w+");
+	for (unordered_map<unsigned long, double>::iterator it = gdta.map.begin(); it != gdta.map.end(); ++it) {
+		fprintf(fp, "%lu %lf\n", it->first, it->second);
+	}
+	fclose(fp);
+}
 
 int create_record(unsigned long acc_nr, double amount)
 {

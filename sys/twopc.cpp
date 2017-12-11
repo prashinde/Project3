@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int timeout = 10; /* 10 secs */
+int timeout = 3; /* 10 secs */
 /*
  * Sends prepare transaction message to all participating nodes.
  * Recieves a reply from them and decides what to do.
@@ -94,7 +94,7 @@ int prepare(trans_t *trans, coomdt_t *cmt)
 	return abrt;
 }
 
-int vote_commit(trans_t *trans, coomdt_t *cmt)
+int vote_commit(trans_t *trans, coomdt_t *cmt, int *reason)
 {
 	int abrt = 0;
 	int ret;
@@ -138,8 +138,10 @@ int vote_commit(trans_t *trans, coomdt_t *cmt)
 			cout << "Error in reading from the socket:" << ret << " Errno:"<< errno << endl;
 			continue;
 		}
-		if(rep.cmt_type != VOTE_COMMIT_REP || rep.cmt_vote != COMMIT_V)
+		if(rep.cmt_type != VOTE_COMMIT_REP || rep.cmt_vote != COMMIT_V) {
+			*reason = rep.trans.status;
 			abrt++;
+		}
 	}
 
 	return abrt;
@@ -200,6 +202,7 @@ void commit_transaction(trans_t *trans, coomdt_t *cmt)
 {
 	int rc;
 	trans->t_state = INIT;
+	int reason;
 
 	cout << "Entering Two Phase Commit" << endl;
 
@@ -213,11 +216,11 @@ void commit_transaction(trans_t *trans, coomdt_t *cmt)
 	}
 
 	cout << "Sending VOTE to commit to backend servers" << endl;
-	rc = vote_commit(trans, cmt);
+	rc = vote_commit(trans, cmt, &reason);
 	if(rc != 0) {
 		cout << "Recieved ABORT" << endl;
 		send_abort(trans, cmt);
-		trans->status = -ENOENT;
+		trans->status = reason;
 		return ;
 	}
 

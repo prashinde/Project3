@@ -11,6 +11,22 @@ static string SQUIT("quit");
 
 #define SAFE_QUIT 0xff
 
+string ERR_STR(int num)
+{
+	switch(num) {
+		case -1:
+		return string("ABORT");
+		break;
+		case -ENOENT:
+		return string("Account does not exist");
+		break;
+		case -EEXIST:
+		return string("Accound already exist");
+		break;
+	}
+	return string("");
+}
+
 void send_async(rq_msg_t msg, c_sock *bs)
 {
 	rep_msg_t *rep;
@@ -36,7 +52,7 @@ rep_msg_t *send_sync(rq_msg_t msg, c_sock *bs)
 	return rep;
 }
 
-rep_cr_msg send_create_msg(unsigned long amount, c_sock *bs)
+rep_cr_msg send_create_msg(double amount, c_sock *bs)
 {
 	rep_msg_t *rep;
 	rq_msg_t rmsg;
@@ -49,7 +65,7 @@ rep_cr_msg send_create_msg(unsigned long amount, c_sock *bs)
 	return rep_msg;
 }
 
-rep_update_msg send_update_msg(unsigned long acc_nr, unsigned long amount, c_sock *bs)
+rep_update_msg send_update_msg(unsigned long acc_nr, double amount, c_sock *bs)
 {
 	rep_msg_t *rep;
 	rq_msg_t   rmsg;
@@ -88,12 +104,12 @@ void send_quit_msg(c_sock *bs)
 int create_record(vector<string> cmd, c_sock *bs)
 {
 	rep_cr_msg rcm;
-	unsigned long amount = strtoul(cmd[1].c_str(), NULL, 10);
+	double amount = stod(cmd[1].c_str(), NULL);
 	rcm = send_create_msg(amount, bs);
 	if(rcm.err_code == 0)
 		cout << "OK " << rcm.acc_nr << endl;
 	else
-		cout << "ERROR" << endl;
+		cout << "ERROR " << ERR_STR(rcm.err_code) << endl;
 	return 0;	
 }
 
@@ -101,12 +117,12 @@ int update_record(vector<string> cmd, c_sock *bs)
 {
 	rep_update_msg rum;
 	unsigned long acc_nr = strtoul(cmd[1].c_str(), NULL, 10);
-	unsigned long amount = strtoul(cmd[2].c_str(), NULL, 10);
+	double amount = stod(cmd[2].c_str(), NULL);
 	rum = send_update_msg(acc_nr, amount, bs);
 	if(rum.err_code == 0)
 		cout << "OK " << rum.amount << endl;
 	else
-		cout << "ERROR" << endl;
+		cout << "ERROR " << ERR_STR(rum.err_code) << endl;
 	return 0;	
 }
 
@@ -118,7 +134,7 @@ int query_record(vector<string> cmd, c_sock *bs)
 	if(rum.err_code == 0)
 		cout << "OK " << rum.amount << endl;
 	else
-		cout << "ERROR " << rum.err_code << endl;
+		cout << "ERROR " << ERR_STR(rum.err_code) << endl;
 	return 0;	
 }
 
@@ -165,6 +181,10 @@ int main(int argc, char *argv[])
 	int rc;
 	coomdt_t *cmdt;
 
+	cout.setf(ios::fixed);
+	cout.setf(ios::showpoint);
+	cout.precision(2);
+
 	if(argc != 3) {
 		cout << "help: ./coord <coord-ip-address> <coord-port>" << endl;
 		return -EINVAL;
@@ -186,10 +206,9 @@ int main(int argc, char *argv[])
 	rc = bs->c_sock_connect();
 	if(rc != 0) {
 		cout << "Unable to connect to socket!" << endl;
-		//return -EINVAL;
+		return -EINVAL;
 	}
 
-	cout << "Loggin into the client shell.." << endl;
 	while(1) {
 		string command;
 		cout << "> ";

@@ -12,4 +12,5 @@ int transaction(trans_t tr);
 int create_record(unsigned long acc_nr, double amount);
 int update_record(unsigned long acc_nr, double amount);
 int search_record(unsigned long acc_nr, double *amount);
+void db_sync();
 #endif
