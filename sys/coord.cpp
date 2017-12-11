@@ -1,10 +1,5 @@
 #include "server.h"
 
-
-void cmdt_open_server(coomdt_t *cmdt)
-{
-}
-
 int main(int argc, char *argv[])
 {
 	coomdt_t *cmdt;
@@ -24,8 +19,10 @@ int main(int argc, char *argv[])
 	cmdt->cmdt_cl_ip = argv[1];
 	cmdt->cmdt_cl_port = atoi(argv[2]);
 
-	cmdt_open_server(cmdt);
-	cmdt_open_client(cmdt);
+	thread fe(cmdt_open_server, cmdt);
+	thread tm(cmdt_open_client, cmdt);
+	fe.join();
+	tm.join();
 	delete cmdt;
 	return 0;
 }

@@ -7,13 +7,25 @@
 
 #include "sock.h"
 using namespace std;
+
+enum conn_state {
+	CONNECTED,
+	UNRESPONSIVE,
+};
+
+typedef struct conn_mdt {
+	enum conn_state state;
+	c_sock *sock;
+}conn_mdt_t;
+
 typedef struct coordinator_mdata {
 	char          *cmdt_ip_addr;
 	int            cmdt_port;
 
 	char          *cmdt_cl_ip;
 	int            cmdt_cl_port;
-	list<c_sock *> cmdt_sock;
+	//mutex_t         cmdt_lock;	
+	list<conn_mdt_t *> conn_dt;
 } coomdt_t;
 
 typedef struct server_mdata {
@@ -27,6 +39,7 @@ typedef struct server_mdata {
 typedef struct session {
 	char  *sip;
 	int    sport;
+	coomdt_t *cmt;
 	c_sock *cs;
 } session_t;
 
@@ -44,12 +57,12 @@ enum msg_type {
 };
 
 typedef struct rq_create_msg {
-	unsigned long amount;
+	double amount;
 } rq_cr_msg;
 
 typedef struct rq_update_msg {
 	unsigned long acc_nr;
-	unsigned long amount;
+	double amount;
 } rq_update_msg;
 
 typedef struct rq_query_msg {
@@ -71,12 +84,12 @@ typedef struct rep_create_msg {
 } rep_cr_msg;
 
 typedef struct rep_update_msg {
-	unsigned long amount;
+	double amount;
 	int err_code;
 } rep_update_msg;
 
 typedef struct rep_query_msg {
-	unsigned long amount;
+	double amount;
 } rep_query_msg;
 
 typedef struct reply_msg {
@@ -91,4 +104,5 @@ typedef struct reply_msg {
 void cmdt_open_client(coomdt_t *cmdt);
 int boot_coord(char *ip, int port);
 int connect_coord(char *ip, int port);
+void cmdt_open_server(coomdt_t *cmdt);
 #endif

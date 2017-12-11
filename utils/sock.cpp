@@ -20,7 +20,6 @@ int c_sock :: c_sock_addr(string ip, int port)
 
 	int optval = 1;
 	setsockopt(this->sock, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
-
 	this->server_addr.sin_port = htons(port);
 	return 0;
 }
@@ -75,6 +74,43 @@ c_sock *c_sock :: c_sock_accept()
 	return cs;
 }
 
+static int poll(int cs, size_t len, int timeout)
+{
+	char sc;
+	/* Algorithm is to wait for 1 sec then increment it by 2, then 4
+     * until we hit timeout */
+	int start = 1;
+	int rc;
+	while(start < timeout) {
+		rc = recv(cs, &sc, 1, MSG_PEEK);
+		if(rc > 0) {
+			return rc;
+		}
+		cout << "Server not responding: Wait..." << endl;
+		start = 2*start;
+		sleep(start);
+	}
+	cout << "Timeout" << endl;
+	return rc;
+}
+
+ssize_t c_sock::c_sock_read(void *buffer, size_t len, int timeout)
+{
+	ssize_t rcv = 0;
+	ssize_t rc = 0;
+	int isalive = poll(this->sock, len, timeout);
+	if(isalive <= 0)
+		return -EINVAL;
+	while(len > 0) {
+		rcv = recv(this->sock, buffer, len, 0);
+		buffer = ((char*)buffer)+rcv;
+		len = len - rcv;
+		rc += rcv;
+	}
+
+	return rc;
+}
+
 ssize_t c_sock::c_sock_read(void *buffer, size_t len)
 {
 	ssize_t rcv = 0;
@@ -91,7 +127,7 @@ ssize_t c_sock::c_sock_read(void *buffer, size_t len)
 
 ssize_t c_sock::c_sock_write(void *buffer, size_t len)
 {
-	return send(this->sock, buffer, len, 0);
+	return send(this->sock, buffer, len, MSG_NOSIGNAL);
 }
 
 void c_sock::c_sock_close()

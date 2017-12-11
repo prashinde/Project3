@@ -24,6 +24,7 @@ public:
 	c_sock* c_sock_accept();
 	ssize_t c_sock_read(void *buffer, size_t len);
 	ssize_t c_sock_write(void *buffer, size_t len);
+	ssize_t c_sock_read(void *buffer, size_t len, int timeout);
 	void c_sock_close();
 };
 #endif

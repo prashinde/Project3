@@ -1,14 +1,34 @@
 #include "server.h"
+#include "transaction.h"
+#include <mutex>
+static unsigned long gacc_n = 1;
+static mutex t_mx;
 
-rep_msg_t *handle_create(rq_cr_msg cr_msg)
+unsigned long get_next_acc()
 {
-	rep_cr_msg rep_cr;
-	rep_msg_t *msg = new rep_msg_t;
+	unsigned long t;
+	unique_lock<mutex> lck(t_mx);
+	t = gacc_n;
+	lck.unlock();
+	return t;
+}
 
+rep_msg_t *handle_create(rq_cr_msg cr_msg, coomdt_t *cmt)
+{
+	/* Allocate a new transaction */ 
+	rep_cr_msg rep_cr;	
+	trans_t *trans = new_transaction();
+	trans->acc_nr = get_next_acc();
+	trans->amount = cr_msg.amount;
+	trans->t_op_type = CREATE;
+	commit_transaction(trans, cmt);
+	rep_msg_t *msg = new rep_msg_t;
 	rep_cr.acc_nr = 100234;
 	msg->u.cr_msg = rep_cr;
 	msg->type = CREATE_REP;
-	return msg;	
+	delete trans;
+	return msg;
+	return NULL;
 }
 
 rep_msg_t *handle_update(rq_update_msg u_msg)
@@ -33,13 +53,13 @@ rep_msg_t *handle_query(rq_query_msg q_msg)
 	return msg;	
 }
 
-rep_msg_t * msg_handler(rq_msg_t req)
+rep_msg_t * msg_handler(rq_msg_t req, coomdt_t *cmt)
 {
 	cout << "Recieved a message from client..." << endl;
 	rep_msg_t *rep;
 	switch(req.type) {
 		case CREATE_REQ:
-		rep = handle_create(req.u.cr_msg);
+		rep = handle_create(req.u.cr_msg, cmt);
 		cout << "Sending reply to a client" << endl;
 		break;
 		case UPDATE_REQ:
@@ -75,7 +95,7 @@ static void *incoming(void *pctx)
 			cout << "Error in reading from the socket:" << ret << " Errno:"<< errno << endl;
 		}
 
-		rep = msg_handler(rmsg);
+		rep = msg_handler(rmsg, ctx->cmt);
 		if(rep == NULL)
 			break;
 		ret = cs->c_sock_write(rep, sizeof(rep_msg_t));
@@ -126,7 +146,7 @@ void cmdt_open_client(coomdt_t *cmdt)
 		}
 
 		ctx->cs = cs;
-
+		ctx->cmt = cmdt;
 		/* Handle incoming traffic from this node */
 		thread t1(incoming, ctx);
 		t1.detach();
