@@ -30,7 +30,7 @@ typedef struct coordinator_mdata {
 
 typedef struct server_mdata {
 	char   *smdt_ip;
-	int     smdt_port;
+	int     smdt_fp; /* Failure point */
 	char   *coord_ip;
 	int     coord_port;
 	c_sock *smdt_sock;
@@ -90,6 +90,7 @@ typedef struct rep_update_msg {
 
 typedef struct rep_query_msg {
 	double amount;
+	int err_code;
 } rep_query_msg;
 
 typedef struct reply_msg {

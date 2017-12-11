@@ -11,6 +11,41 @@ int timeout = 10; /* 10 secs */
  * If reply is Ok from all, protocol furthers, else it will halt.
  */
 
+void query(trans_t *trans, coomdt_t *cmt)
+{
+	int abrt = 0;
+	int ret;
+
+	conn_mdt_t *mdt;
+	list<conn_mdt_t *>::iterator it;
+	two_pc_msg_t pmesg;
+
+	pmesg.cmt_type = QUERY_M;
+	memcpy(&pmesg.trans, trans, sizeof(trans_t));
+	for(it = (cmt->conn_dt).begin(); it != (cmt->conn_dt).end(); it++) {
+		mdt = *it;
+		if(mdt->state != CONNECTED) {
+			cout << "Prepare:Server not in a group view" << endl;
+			continue;
+		}
+		c_sock *cs = mdt->sock;
+		ret = cs->c_sock_write(&pmesg, sizeof(two_pc_msg_t));
+		if(ret <= 0) {
+			mdt->state = UNRESPONSIVE;
+			cout << "Error in writing to the socket:" << ret << " Errno:"<< errno << endl;
+		}
+
+		ret = cs->c_sock_read(&pmesg, sizeof(two_pc_msg_t));
+		if(ret <= 0) {
+			mdt->state = UNRESPONSIVE;
+			cout << "Error in writing to the socket:" << ret << " Errno:"<< errno << endl;
+		} {
+			memcpy(trans, &pmesg.trans, sizeof(trans_t));
+			break;
+		}
+	}
+}
+
 int prepare(trans_t *trans, coomdt_t *cmt)
 {
 	int abrt = 0;
@@ -44,7 +79,6 @@ int prepare(trans_t *trans, coomdt_t *cmt)
 			continue;
 		}
 		c_sock *cs = mdt->sock;
-		cout << "Reading data from server:" << endl;
 		ret = cs->c_sock_read(&rep, sizeof(two_pc_msg_t), timeout);
 		if(ret < 0) {
 			/* Failures int he prepare state is fine. IT means, servers are just not part of transactions.
@@ -174,7 +208,7 @@ void commit_transaction(trans_t *trans, coomdt_t *cmt)
 	if(rc != 0) {
 		cout << "Recieved ABORT" << endl;
 		send_abort(trans, cmt);
-		trans->status = -1;
+		trans->status = -ENOENT;
 		return ;
 	}
 
@@ -183,9 +217,11 @@ void commit_transaction(trans_t *trans, coomdt_t *cmt)
 	if(rc != 0) {
 		cout << "Recieved ABORT" << endl;
 		send_abort(trans, cmt);
+		trans->status = -ENOENT;
 		return ;
 	}
 
 	cout << "Sending final commit message" << endl;
 	commit(trans, cmt);
+	trans->status = 0;
 }

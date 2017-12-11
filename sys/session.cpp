@@ -8,7 +8,7 @@ unsigned long get_next_acc()
 {
 	unsigned long t;
 	unique_lock<mutex> lck(t_mx);
-	t = gacc_n;
+	t = gacc_n++;
 	lck.unlock();
 	return t;
 }
@@ -21,35 +21,50 @@ rep_msg_t *handle_create(rq_cr_msg cr_msg, coomdt_t *cmt)
 	trans->acc_nr = get_next_acc();
 	trans->amount = cr_msg.amount;
 	trans->t_op_type = CREATE;
+
 	commit_transaction(trans, cmt);
 	rep_msg_t *msg = new rep_msg_t;
-	rep_cr.acc_nr = 100234;
+	rep_cr.acc_nr = trans->acc_nr;
+	rep_cr.err_code = trans->status;
 	msg->u.cr_msg = rep_cr;
 	msg->type = CREATE_REP;
 	delete trans;
 	return msg;
-	return NULL;
 }
 
-rep_msg_t *handle_update(rq_update_msg u_msg)
+rep_msg_t *handle_update(rq_update_msg u_msg, coomdt_t *cmt)
 {
 	rep_update_msg rep_up;
-	rep_msg_t *msg = new rep_msg_t;
+	trans_t *trans = new_transaction();
+	trans->acc_nr = u_msg.acc_nr;
+	trans->amount = u_msg.amount;
+	trans->t_op_type = UPDATE;
+	commit_transaction(trans, cmt);
 
-	rep_up.amount = 100234;
+	rep_msg_t *msg = new rep_msg_t;
+	rep_up.err_code = trans->status;
+	rep_up.amount = trans->amount;
 	msg->u.up_msg = rep_up;
 	msg->type = UPDATE_REP;
+	delete trans;
 	return msg;	
 }
 
-rep_msg_t *handle_query(rq_query_msg q_msg)
+rep_msg_t *handle_query(rq_query_msg q_msg, coomdt_t *cmt)
 {
 	rep_query_msg rep_q;
 	rep_msg_t *msg = new rep_msg_t;
 
-	rep_q.amount = 100234;
+	trans_t *trans = new_transaction();
+	trans->acc_nr = q_msg.acc_nr;
+	trans->t_op_type = QUERY;
+	/* Dont neet 2 phase commit for query */
+	query(trans, cmt);
+	rep_q.amount = trans->amount;
+	rep_q.err_code = trans->status;
 	msg->u.q_msg = rep_q;
 	msg->type = QUERY_REP;
+	delete trans;
 	return msg;	
 }
 
@@ -63,11 +78,11 @@ rep_msg_t * msg_handler(rq_msg_t req, coomdt_t *cmt)
 		cout << "Sending reply to a client" << endl;
 		break;
 		case UPDATE_REQ:
-		rep = handle_update(req.u.up_msg);
+		rep = handle_update(req.u.up_msg, cmt);
 		cout << "Sending reply to a client" << endl;
 		break;
 		case QUERY_REQ:
-		rep = handle_query(req.u.q_msg);
+		rep = handle_query(req.u.q_msg, cmt);
 		cout << "Sending reply to a client" << endl;
 		break;
 		case QUIT:

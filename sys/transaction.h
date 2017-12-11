@@ -1,6 +1,6 @@
 #ifndef __TRANS_H_
 #define __TRANS_H_
-
+#include "server.h"
 enum commit_state {
 	INIT = 1,
 	READY,
@@ -16,6 +16,7 @@ enum commit_msg_type {
 	VOTE_COMMIT,
 	VOTE_COMMIT_REP,
 	COMMIT_M,
+	QUERY_M,
 	COMMIT_MSG_TYPE_NR,
 };
 
@@ -49,4 +50,5 @@ typedef struct two_pc_msg {
 
 trans_t *new_transaction();
 void commit_transaction(trans_t *trans, coomdt_t *cmt);
+void query(trans_t *trans, coomdt_t *cmt);
 #endif

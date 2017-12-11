@@ -90,7 +90,10 @@ int create_record(vector<string> cmd, c_sock *bs)
 	rep_cr_msg rcm;
 	unsigned long amount = strtoul(cmd[1].c_str(), NULL, 10);
 	rcm = send_create_msg(amount, bs);
-	cout << "OK " << rcm.acc_nr << endl;
+	if(rcm.err_code == 0)
+		cout << "OK " << rcm.acc_nr << endl;
+	else
+		cout << "ERROR" << endl;
 	return 0;	
 }
 
@@ -100,7 +103,10 @@ int update_record(vector<string> cmd, c_sock *bs)
 	unsigned long acc_nr = strtoul(cmd[1].c_str(), NULL, 10);
 	unsigned long amount = strtoul(cmd[2].c_str(), NULL, 10);
 	rum = send_update_msg(acc_nr, amount, bs);
-	cout << "OK " << rum.amount << endl;
+	if(rum.err_code == 0)
+		cout << "OK " << rum.amount << endl;
+	else
+		cout << "ERROR" << endl;
 	return 0;	
 }
 
@@ -109,7 +115,10 @@ int query_record(vector<string> cmd, c_sock *bs)
 	rep_query_msg rum;
 	unsigned long acc_nr = strtoul(cmd[1].c_str(), NULL, 10);
 	rum = send_query_msg(acc_nr, bs);
-	cout << "OK " << rum.amount << endl;
+	if(rum.err_code == 0)
+		cout << "OK " << rum.amount << endl;
+	else
+		cout << "ERROR " << rum.err_code << endl;
 	return 0;	
 }
 
@@ -121,7 +130,6 @@ static int process_cmd(vector<string> cmd, c_sock *bs)
 			cout << "Invalid create command" << endl;
 			return -EINVAL;
 		}
-		cout << "Create:Command is:" << cmd[0] << endl;
 		create_record(cmd, bs);
 		return 0;
 	} else if(cmd[0] == SUPDATE) {
@@ -132,7 +140,6 @@ static int process_cmd(vector<string> cmd, c_sock *bs)
 		update_record(cmd, bs);
 		return 0;
 	} else if(cmd[0] == SQUERY) {
-		cout << "Query:Command is:" << cmd[0] << endl;
 		if(cmd.size() != 2) {
 			cout << "Invalid create command" << endl;
 			return -EINVAL;
